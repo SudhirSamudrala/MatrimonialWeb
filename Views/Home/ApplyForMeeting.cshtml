@@ -1,0 +1,63 @@
+﻿@model MatrimonialWebsite.Models.RegistrationDetails
+@using System.Data
+@{
+    ViewBag.Title = "ApplyForMeeting";
+}
+
+<h2>Apply For Meeting</h2>
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table style="width:100%">
+        <tr>
+            <th>Registration Id</th>
+            <th>Full Name</th>
+            <th>Meeeting Time</th>
+            <th></th>
+        </tr>
+        @foreach (DataRow row in Model.DT.Rows)
+        {
+            <tr>
+                <td>@row["AppliedUserId"]</td>
+                <td>@row["FullName"]</td>
+                <td>
+                    @{
+                        var i = "";
+                        if (row["MeetingDate"].ToString() == "")
+                        {
+                            i = "";
+                        }
+                        else
+                        {
+                            i = Convert.ToDateTime(row["MeetingDate"]).ToString("dd-MM-yyyy") + " " + row["MeetingTime"];
+                        }
+                    }
+                    @i
+                </td>
+                <td>
+                    @if ((row["Role"]).ToString() == "Admin")
+                    {
+                        <button type="button" style="background-color: #d1d0f9" disabled><span>Schedule Meeting</span></button>
+                    }
+                    else
+                    {
+                        <button type="button" style="background-color: #d1d0f9" onclick="location.href='@Url.Action("ScheduleMeeting","Home",new {id = @row["id"], AppliedUserId = @row["AppliedUserId"]})'"><span>Schedule Meeting</span></button>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="col-md-12" style="text-align:center">
+        <br />
+        <button type="button" style="background-color: #d1d0f9; width: 200px;" onclick="location.href='@Url.Action("IntrestDetail","Home")'"><span>Back</span></button>
+        <br />
+        <br />
+    </div>
+</body>
+</html>

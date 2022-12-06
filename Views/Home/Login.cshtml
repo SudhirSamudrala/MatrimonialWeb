@@ -1,0 +1,44 @@
+﻿@model MatrimonialWebsite.Models.loginDetail
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+    if (ViewBag.Message != null)
+    {
+        <span style="text-align:center; font-size:25px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.Message</span>
+    }
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css2.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body style="background-image: url('../../matrimony-blog-img.jpg');">
+    <div class="login-page">
+        <div class="form">
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+            {
+                <form class="login-form">
+                    @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @placeholder = "User Email" })
+                    @Html.ValidationMessageFor(a => a.Email, "", new { @class = "error" })
+                    @Html.PasswordFor(a => a.password, new { @class = "form-control", @placeholder = "Password" })
+                    @Html.ValidationMessageFor(a => a.password, "", new { @class = "error" })
+                    <button type="submit" name="login">Login</button>
+                    <p class="message">Not Registered? @Html.ActionLink("Create Account", "UserRegistration", "Home")</p>
+
+
+                </form>
+            }
+        </div>
+    </div>
+</body>
+</html>

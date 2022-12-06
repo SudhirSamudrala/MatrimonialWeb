@@ -1,0 +1,124 @@
+﻿@*using MatrimonialWebsite.Models*@
+
+@using MatrimonialWebsite.Models
+@model RegistrationDetails
+
+@*@model MatrimonialWebsite.Models.RegistrationDetails*@
+@using System.Data
+@{
+    ViewBag.Title = "ScheduleMeeting";
+}
+
+<h2>Schedule Meeting</h2>
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm("UpdateMeeting", "Home", FormMethod.Post))
+    {
+        <form>
+            <table style="width:100%">
+                <tr>
+                    <th>Registration Id</th>
+                    <th>Full Name</th>
+                    <th>Meeeting Date</th>
+                    <th>Meeeting Time</th>
+                    <th>AM/PM</th>
+                    <th></th>
+                </tr>
+                @foreach (DataRow row in Model.DT.Rows)
+                {
+            <tr>
+                <td>@Html.TextBoxFor(a => a.AppliedUserId, new { @value = row["AppliedUserId"], @disabled = "disabled" })</td>
+                <td><input type="text" value="@row["FullName"].ToString()" disabled /></td>
+                @*<td>@Html.TextBoxFor(a => a.MeetingDate, "{0:yyyy-MM-dd}", new { @id = "MeetingDate", @placeholder = "Meeting Date" })</td>*@
+                <td>@Html.TextBoxFor(a => a.MeetingDate, new { @id = "MeetingDate", @placeholder = "Meeting Date" })</td>
+                @*<td>@Html.TextBoxFor(a => a.MeetingTime, new { @id = "MeetingTime", @placeholder = "00:00" })</td>*@
+                <td>
+                    <select name="MeetingTime" id="MeetingTime">
+                        <option value="12:00">12:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="08:00">08:00</option>
+                        <option value="07:00">07:00</option>
+                        <option value="06:00">06:00</option>
+                        <option value="05:00">05:00</option>
+                        <option value="04:00">04:00</option>
+                        <option value="03:00">03:00</option>
+                        <option value="02:00">02:00</option>
+                        <option value="01:00">01:00</option>
+                    </select>
+                </td>
+                <td>
+                    @*<select name="txtTime" id="txtTime">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>*@
+
+                    @Html.DropDownListFor(a => a.AMorPM,
+                        new SelectList(Enum.GetValues(typeof(TimeAMorPM))))
+
+                    @*@Html.DropDownList("AMorPM", new SelectList(Enum.GetValues(typeof(TimeAMorPM))), "--Select TeaType--")*@
+                </td>
+                <td>
+                    <button type="submit" id="submit" style="background-color: #d1d0f9" name="ScheduleMeeting">Schedule Meeting</button>
+                </td>
+            </tr>
+                }
+            </table>
+        </form>
+    }
+    <div class="col-md-12" style="text-align:center">
+        <br />
+        <button type="button" style="background-color: #d1d0f9; width: 200px;" onclick="location.href='@Url.Action("IntrestDetail","Home")'"><span>Back</span></button>
+        <br />
+        <br />
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                $("#MeetingDate").datepicker({
+                    //maxDate: '0',
+                    dateFormat: 'mm/dd/yy',
+                    changeYear: true,
+                    changeMonth: true,
+                    yearRange: "-100:+0"
+                }).datepicker("setDate", new Date());
+            });
+
+
+            //$(function () {
+            //    $("#MeetingTime").datetimepicker({
+            //        datepicker: false,
+            //        pickDate: false,
+            //        Format: "H:i",
+            //        timeOnly: true
+            //    });
+            //});
+        });
+
+        $("#submit").click(function () {
+            if ($("#MeetingDate").val() == "") {
+                alert("Meeting Date Should not be Blank.");
+                return;
+            }
+            else if ($("#MeetingTime").val() == "") {
+                alert("Meeting Time Should not be Blank.");
+                return;
+            }
+        });
+    </script>
+}

@@ -1,0 +1,72 @@
+﻿@model MatrimonialWebsite.Models.RegistrationDetails
+@using System.Data
+@{
+    ViewBag.Title = "Index";
+}
+<div class="jumbotron" style="text-align: center; background-color: greenyellow; height:30px">
+    <p>
+        <h3> Your search for the perfect match ends here! </h3>
+    </p>
+</div>
+@*for (int q = 0; q < Model.DT.Rows.Count; q++)*@
+<div>
+    <div style="background-color: gainsboro; text-align: right">
+        <button type="button" style="background-color: #d1d0f9" onclick="location.href='@Url.Action("ApplyForMeeting","Home",new {RegistrId = @Session["id"]})'"><span>Apply For Meeting</span></button>
+    </div>
+    @foreach (DataRow row in Model.DT.Rows)
+    {
+<div class="row" style="background-color: burlywood;">
+    @*<div class="col-sm-12" style="background-color: burlywood; text-align: center;">*@
+    <div class="col-md-4" style="text-align:center">
+    <br />
+        <p>
+            <img src="@row["FileName"]" width="200" height="200" />
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            Registration Id - @row["id"]
+        </p>
+        <p>
+            Full Name - @row["FullName"]
+        </p>
+        <p>
+            Age - @row["Age"]
+        </p>
+        <p>
+            Mobile - @row["Mobile"]
+        </p>        
+        <p>
+            Weight - @row["Weight"]
+        </p>
+        <p>
+            Gender - @row["Gender"]
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            Profession - @row["Profession"]
+        </p>
+        <p>
+            Hobbies - @row["Hobbies"]
+        </p>
+        <p>
+            Religion - @row["Religion"]
+        </p>
+        <p>
+            Native - @row["Native"]
+        </p>
+        <p>
+            Height - @row["Height"]
+        </p>
+        <p>
+            <button type="button" style="background-color: #d1d0f9" onclick="location.href='@Url.Action("IntrestData","Home",new {RegistrId = @row["id"]})'"><span>Intrest</span></button>
+        <p>
+    </div>
+        @* </div> *@
+    </div>
+    <div style="background-color: gainsboro;">
+        <br />
+    </div>
+    }
+</div>
